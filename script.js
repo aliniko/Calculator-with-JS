@@ -6,9 +6,10 @@ class Calculator{
     }
 
     clear(){
-        this.currentOperand = ''
-        this.previousOperand = ''
+        this.currentOperand = ""
+        this.previousOperand = ""
         this.operation = undefined
+        //console.log("empty")
     }
 
     delete() {
@@ -16,11 +17,19 @@ class Calculator{
     }
 
     appendNumber(number) {
-        this.currentOperand = number 
+        if (number === '.' && this.currentOperand.includes('.')) return
+        this.currentOperand = this.currentOperand.toString() + number.toString()
+        //console.log("the numbers only") 
     }
 
-    chooseOperation() {
-
+    chooseOperation(operation) {
+        if (this.currentOperand === '') return 
+        if (this.previousOperand !== ''){
+            this.coompute()
+        }
+        this.operation = operation
+        this.previousOperand = this.currentOperand
+        this.currentOperand = ''
     }
 
     coompute() {
@@ -28,7 +37,8 @@ class Calculator{
     }
 
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperandTextElement
+        this.currentOperandTextElement.innerText = this.currentOperand
+        this.previousOperandTextElement.innerText = this.previousOperand
     }
 
 }
@@ -50,4 +60,10 @@ numberButtons.forEach(button => {
     })
 })
 
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText)
+        calculator.updateDisplay()
+    })
+})
 

@@ -9,7 +9,7 @@ class Calculator{
         this.currentOperand = ""
         this.previousOperand = ""
         this.operation = undefined
-        //console.log("empty")
+       
     }
 
     delete() {
@@ -58,9 +58,20 @@ class Calculator{
 
     }
 
+    getDsiplayNumber(number) {
+        const floatNumber = parseFloat(number)
+        if(isNaN(floatNumber)) return ''
+        return floatNumber.toLocaleString('en')
+    }
+
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperand
-        this.previousOperandTextElement.innerText = this.previousOperand
+        this.currentOperandTextElement.innerText =
+        this.getDsiplayNumber(this.currentOperand)
+        if(this.operation != null){
+            this.previousOperandTextElement.innerText =
+             `${this.getDsiplayNumber(this.previousOperand)} ${this.operation}`
+        
+        }
     }
 
 }
@@ -96,5 +107,10 @@ equalsButton.addEventListener('click', button => {
 
 allClearButton.addEventListener('click', button => {
     calculator.clear()
+    calculator.updateDisplay()
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete()
     calculator.updateDisplay()
 })
